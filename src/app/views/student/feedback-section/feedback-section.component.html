@@ -1,0 +1,32 @@
+<div [formGroup]="sectionForm" class="card mb-3 section-card">
+  <div class="card-header bg-light d-flex justify-content-between align-items-center">
+    <span class="fw-semibold">Section {{ index + 1 }}</span>
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <label class="form-label">Section Title</label>
+      <input type="text" class="form-control" formControlName="title" placeholder="e.g. Course Content" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" formControlName="description" rows="2" placeholder="Optional description..."></textarea>
+    </div>
+
+    <div formArrayName="questions">
+      <label class="form-label fw-semibold">Questions</label>
+      @for (q of questions.controls; track q; let qi = $index) {
+        <div class="d-flex align-items-start gap-2 mb-2">
+          <div class="flex-grow-1">
+            <app-feedback-question [questionForm]="$any(q)" [index]="qi"></app-feedback-question>
+          </div>
+          <button type="button" class="btn btn-outline-danger btn-sm mt-4" (click)="removeQuestion(qi)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      }
+      <button type="button" class="btn btn-outline-secondary btn-sm mt-1" (click)="addQuestion()">
+        <i class="bi bi-plus me-1"></i>Add Question
+      </button>
+    </div>
+  </div>
+</div>

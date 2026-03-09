@@ -1,0 +1,77 @@
+<!-- Hero -->
+<header class="bg-dark py-5">
+  <div class="container px-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center my-5">
+        <h1 class="display-5 fw-bolder text-white mb-3">
+          <i class="bi bi-chat-square-text me-3"></i>Student Feedback Forum
+        </h1>
+        <p class="lead text-white-50 mb-4">
+          Submit, track and review course feedback. Help shape the future of education.
+        </p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+          @if (auth.isLoggedIn()) {
+            <a class="btn btn-primary btn-lg px-4" routerLink="/feedbacks">
+              <i class="bi bi-list-ul me-2"></i>My Feedbacks
+            </a>
+            <a class="btn btn-outline-light btn-lg px-4" routerLink="/feedbacks/new">
+              <i class="bi bi-plus-circle me-2"></i>New Feedback
+            </a>
+          } @else {
+            <a class="btn btn-primary btn-lg px-4" routerLink="/register">Get Started</a>
+            <a class="btn btn-outline-light btn-lg px-4" routerLink="/login">Login</a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Features -->
+<section class="py-5 border-bottom" id="features">
+  <div class="container px-5 my-5">
+    <div class="row gx-5">
+      <div class="col-lg-4 mb-5 mb-lg-0 text-center">
+        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex p-3">
+          <i class="bi bi-pencil-square fs-4"></i>
+        </div>
+        <h2 class="h4 fw-bolder">Submit Feedback</h2>
+        <p>Easily share your thoughts on courses, sections, and individual questions.</p>
+      </div>
+      <div class="col-lg-4 mb-5 mb-lg-0 text-center">
+        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex p-3">
+          <i class="bi bi-bar-chart-line fs-4"></i>
+        </div>
+        <h2 class="h4 fw-bolder">Track Responses</h2>
+        <p>Monitor the status of your submitted feedbacks and responses from educators.</p>
+      </div>
+      <div class="col-lg-4 text-center">
+        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 d-inline-flex p-3">
+          <i class="bi bi-people fs-4"></i>
+        </div>
+        <h2 class="h4 fw-bolder">Improve Together</h2>
+        <p>Your feedback contributes to a better learning experience for everyone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="bg-light py-5">
+  <div class="container px-5 text-center">
+    <h2 class="fw-bolder mb-3">Ready to get started?</h2>
+    <p class="lead mb-4">Join students who are already making a difference.</p>
+    @if (!auth.isLoggedIn()) {
+      <a class="btn btn-primary btn-lg px-5" routerLink="/register">Create an account</a>
+    } @else {
+      <a class="btn btn-primary btn-lg px-5" routerLink="/feedbacks/new">Submit Feedback</a>
+    }
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 bg-dark">
+  <div class="container text-center">
+    <p class="m-0 text-white-50">Copyright &copy; FeedbackStudent 2024</p>
+  </div>
+</footer>
