@@ -1,0 +1,8 @@
+<div [formGroup]="questionForm" class="question-item py-2">
+  <div class="row align-items-center">
+    <div class="col">
+      <label class="form-label text-muted small">Question {{ index + 1 }}</label>
+      <input type="text" class="form-control form-control-sm" formControlName="title" placeholder="Question title..." />
+    </div>
+  </div>
+</div>

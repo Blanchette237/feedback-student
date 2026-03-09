@@ -1,0 +1,80 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">
+      <i class="bi bi-pencil-square me-2"></i>
+      {{ feedbackId ? 'Edit Feedback' : 'New Feedback' }}
+    </h4>
+    <a class="btn btn-outline-secondary btn-sm" routerLink="/feedbacks">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-2 text-muted">Loading...</p>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Feedback Description <span class="text-danger">*</span></label>
+            <textarea
+              class="form-control"
+              formControlName="description"
+              rows="3"
+              placeholder="Describe your overall feedback..."
+            ></textarea>
+            @if (form.get('description')?.invalid && form.get('description')?.touched) {
+              <div class="text-danger small mt-1">Description is required.</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Sections</h5>
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="addSection()">
+          <i class="bi bi-plus me-1"></i>Add Section
+        </button>
+      </div>
+
+      <div formArrayName="sections">
+        @for (section of sections.controls; track section; let i = $index) {
+          <div class="d-flex align-items-start gap-2">
+            <div class="flex-grow-1">
+              <app-feedback-section [sectionForm]="$any(section)" [index]="i"></app-feedback-section>
+            </div>
+            @if (sections.length > 1) {
+              <button type="button" class="btn btn-outline-danger btn-sm mt-3" (click)="removeSection(i)">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      @if (sections.length === 0) {
+        <div class="text-center text-muted py-3">
+          No sections yet. <button type="button" class="btn btn-link p-0" (click)="addSection()">Add one</button>
+        </div>
+      }
+
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-secondary" routerLink="/feedbacks">Cancel</a>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || form.invalid">
+          @if (isSubmitting) {
+            <span class="spinner-border spinner-border-sm me-2"></span>Saving...
+          } @else {
+            <i class="bi bi-check-lg me-1"></i>{{ feedbackId ? 'Update' : 'Submit' }} Feedback
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>

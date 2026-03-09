@@ -1,0 +1,69 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">
+      <i class="bi bi-list-ul me-2"></i>My Feedbacks
+    </h4>
+    <a class="btn btn-primary btn-sm" routerLink="/feedbacks/new">
+      <i class="bi bi-plus me-1"></i>New Feedback
+    </a>
+  </div>
+
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible py-2">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2">{{ errorMessage }}</div>
+  }
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-2 text-muted">Loading feedbacks...</p>
+    </div>
+  } @else if (feedbacks.length === 0) {
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+      <p>No feedbacks yet.</p>
+      <a class="btn btn-primary" routerLink="/feedbacks/new">Submit your first feedback</a>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th>Sections</th>
+            <th>Created</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (feedback of feedbacks; track feedback.feedId) {
+            <tr>
+              <td class="text-muted">{{ feedback.feedId }}</td>
+              <td>{{ feedback.description }}</td>
+              <td>
+                <span class="badge bg-secondary">{{ feedback.sections?.length || 0 }} sections</span>
+              </td>
+              <td class="text-muted small">
+                {{ feedback.createdDate | date:'mediumDate' }}
+              </td>
+              <td class="text-end">
+                <button class="btn btn-outline-primary btn-sm me-1" (click)="edit(feedback)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="delete(feedback)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
